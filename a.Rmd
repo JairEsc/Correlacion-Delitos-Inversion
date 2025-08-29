@@ -1,0 +1,31 @@
+---
+title: "Análisis de correlación entre tendencia delictiva e inversión en infraestructura"
+output: html_document
+date: "2025-08-29"
+author: "Jair"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Datos
+- Datos del Secretariado: Delitos del Fuero común por municipio. Tasa por cada mil habitantes.
+- Base interna de inversión en obras de infraestructura por municipio.
+
+```{r  echo=FALSE}
+par(mfrow=c(2, 1)) 
+library(sf)
+
+plot(delitos_e_inversion_periodo_c_geom["tasa_p_c_mil"], main = "Tasa de Delitos", pal = viridis)
+plot(delitos_e_inversion_periodo_c_geom["inversion"], main = "Inversión", pal = viridis)
+
+```
+
+## Test de correlación
+
+
+```{r  echo=FALSE}
+cor.test(delitos_e_inversion_periodo$tasa_p_c_mil,delitos_e_inversion_periodo$inversion)
+```
+Se obtiene una correlación positiva (significativa). 
