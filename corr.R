@@ -8,8 +8,10 @@ inversion_p_municipio_año=obras_c_inversion |> st_drop_geometry() |> dplyr::gro
 
 inversion_p_municipio_periodo=inversion_p_municipio_periodo |> 
   dplyr::filter(Municipio!='Varios')
-
-
+inversion_p_municipio_periodo=inversion_p_municipio_periodo |> merge(intercensal_mun_2020,by='Municipio',all.x=T)
+inversion_p_municipio_periodo=inversion_p_municipio_periodo |> 
+  dplyr::mutate(inversion_per_capita=inversion/as.numeric(`Población total`)) |> 
+  dplyr::select(Municipio,inversion_per_capita)
 municipios=read_sf("../../../Reutilizables/Cartografia/LIM_MUNICIPALES.shp")
 
 "../../../Repositorios/Seguridad_Tablero_Movil/Municipal-Delitos - Julio 2025 (2015-2025).csv" |> read.csv(check.names = F,fileEncoding = "latin1") ->delitos_p_mun
@@ -47,11 +49,17 @@ delitos_e_inversion_periodo_c_geom=delitos_e_inversion_periodo |> merge(municipi
   st_as_sf()|> st_set_crs("EPSG:32614")
 
 library(viridis)
-par(mfrow=c(2, 1)) 
+par(mfrow=c(1, 2)) 
 library(sf)
 
 plot(delitos_e_inversion_periodo_c_geom["tasa_p_c_mil"], main = "Tasa de Delitos", pal = viridis)
 
-# Mapa 2: Inversión
 plot(delitos_e_inversion_periodo_c_geom["inversion"], main = "Inversión", pal = viridis)
 cor.test(delitos_e_inversion_periodo$tasa_p_c_mil,delitos_e_inversion_periodo$inversion)
+
+
+
+
+
+
+#########Ahora por años

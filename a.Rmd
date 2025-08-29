@@ -14,11 +14,11 @@ knitr::opts_chunk$set(echo = TRUE)
 - Base interna de inversión en obras de infraestructura por municipio.
 
 ```{r  echo=FALSE}
-par(mfrow=c(2, 1)) 
+par(mfrow=c(1, 2)) 
 library(sf)
 
 plot(delitos_e_inversion_periodo_c_geom["tasa_p_c_mil"], main = "Tasa de Delitos", pal = viridis)
-plot(delitos_e_inversion_periodo_c_geom["inversion"], main = "Inversión", pal = viridis)
+plot(delitos_e_inversion_periodo_c_geom["inversion_per_capita"], main = "Inversión per capita", pal = viridis)
 
 ```
 
@@ -28,4 +28,4 @@ plot(delitos_e_inversion_periodo_c_geom["inversion"], main = "Inversión", pal =
 ```{r  echo=FALSE}
 cor.test(delitos_e_inversion_periodo$tasa_p_c_mil,delitos_e_inversion_periodo$inversion)
 ```
-Se obtiene una correlación positiva (significativa). 
+Se obtiene una correlación negativa (no-significativa). 
